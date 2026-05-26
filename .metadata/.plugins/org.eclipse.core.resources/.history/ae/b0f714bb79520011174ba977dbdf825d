@@ -1,5 +1,0 @@
-package com.pentagon.LibraryManagementSystem.Repository;
-
-public class AuthorRepository {
-
-}

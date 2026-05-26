@@ -1,0 +1,4 @@
+.env
+.metadata
+.vscode
+node_modules

@@ -1,5 +1,0 @@
-package com.pentagon.LibraryManagementSystem.Exception;
-
-public class GlobalExceptionHandler {
-
-}
