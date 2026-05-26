@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 📚 Library Management System
 
 > A full-stack Library Management System built with **Spring Boot**, **React**, and **PostgreSQL** — featuring complete CRUD operations, JPA relationships, a borrow/return system, and a modern responsive UI.
@@ -225,3 +226,6 @@ All endpoints tested via **Postman**. Import the collection *(add link or file h
 ## 📄 License
 
 This project is open source and available under the [MIT License](LICENSE).
+=======
+# SpringBoot-LMS
+>>>>>>> 9b5f20131d2d74138eaa58fabc2e930f02e5d575
