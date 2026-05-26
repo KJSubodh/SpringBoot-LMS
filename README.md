@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # 📚 Library Management System
 
 > A full-stack Library Management System built with **Spring Boot**, **React**, and **PostgreSQL** — featuring complete CRUD operations, JPA relationships, a borrow/return system, and a modern responsive UI.

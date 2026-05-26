@@ -1,10 +1,22 @@
-HELP.md
+# --- Build Outputs ---
 target/
-.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+build/
+out/
+bin/
+*.class
+*.jar
+*.war
+*.ear
 
-### STS ###
+# --- IDEs ---
+# IntelliJ
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# Eclipse / STS
 .apt_generated
 .classpath
 .factorypath
@@ -13,35 +25,26 @@ target/
 .springBeans
 .sts4-cache
 
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
+# VS Code
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
+# --- Dependencies ---
+node_modules/
+.mvn/wrapper/maven-wrapper.jar
+/.gradle/
 
-### VS Code ###
-.vscode/
+# --- Environment & Secrets ---
+.env*
+!.env.example
 
-### Environment Variables ###
-.env
-.env.local
-.env.production
-.env.development
-
-### Logs ###
+# --- Logs & OS ---
 *.log
 logs/
-
-### OS ###
 .DS_Store
 Thumbs.db
+
+# --- Exceptions ---
+!**/src/main/**/target/
+!**/src/test/**/target/

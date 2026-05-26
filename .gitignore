@@ -1,4 +1,15 @@
-.env
+# IDE
 .metadata
 .vscode
-node_modules
+.idea
+
+# Environment
+.env
+.env.local
+
+# Frontend deps
+node_modules/
+
+# OS
+.DS_Store
+Thumbs.db
