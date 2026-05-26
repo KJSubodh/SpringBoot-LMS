@@ -226,5 +226,3 @@ All endpoints tested via **Postman**. Import the collection *(add link or file h
 
 This project is open source and available under the [MIT License](LICENSE).
 =======
-# SpringBoot-LMS
->>>>>>> 9b5f20131d2d74138eaa58fabc2e930f02e5d575
