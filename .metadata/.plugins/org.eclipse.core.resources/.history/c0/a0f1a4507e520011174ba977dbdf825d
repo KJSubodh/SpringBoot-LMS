@@ -1,0 +1,7 @@
+package com.pentagon.LibraryManagementSystem.DAO;
+
+@Repository
+public class BookDAO {
+	@Autowired
+	private BookRepository book;
+}

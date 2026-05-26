@@ -1,0 +1,27 @@
+package com.pentagon.LibraryManagementSystem.DAO;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.pentagon.LibraryManagementSystem.Entity.Book;
+import com.pentagon.LibraryManagementSystem.Repository.BookRepository;
+import com.pentagon.LibraryManagementSystem.Repository.UserRepository;
+
+@Repository
+public class BookDAO {
+	@Autowired
+	private BookRepository book;
+	
+	@Autowired
+	private UserRepository user;
+	
+	public Book addBook(Book b)
+	{
+		return book.save(b);
+	}
+	
+	public List<Book> getAllBooks()
+	{
+		
+	}
+}

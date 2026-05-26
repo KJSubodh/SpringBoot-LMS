@@ -1,0 +1,117 @@
+package com.pentagon.LibraryManagementSystem.Controller;
+
+import com.pentagon.LibraryManagementSystem.DAO.UserDAO;
+import com.pentagon.LibraryManagementSystem.Entity.User;
+import com.pentagon.LibraryManagementSystem.Entity.Profile;
+import com.pentagon.LibraryManagementSystem.DTO.ResponseStructure;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/users")
+public class UserController {
+
+    @Autowired
+    private UserDAO userDAO;
+
+    @PostMapping
+    public ResponseEntity<ResponseStructure<User>> createUser(@RequestBody User user) {
+        try {
+            if (user.getProfile() == null) {
+                ResponseStructure<User> response = ResponseStructure.badRequest("Profile information is required");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            }
+            User savedUser = userDAO.saveUser(user);
+            ResponseStructure<User> response = ResponseStructure.created("User created successfully", savedUser);
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        } catch (Exception e) {
+            ResponseStructure<User> response = ResponseStructure.error(
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                "Error creating user: " + e.getMessage()
+            );
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+    
+    @PostMapping("/with-profile")
+    public ResponseEntity<ResponseStructure<User>> createUserWithProfile(@RequestBody User user) {
+        try {
+            User savedUser = userDAO.saveUser(user);
+            ResponseStructure<User> response = ResponseStructure.created("User with profile created successfully", savedUser);
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        } catch (Exception e) {
+            ResponseStructure<User> response = ResponseStructure.error(
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                "Error creating user: " + e.getMessage()
+            );
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
+    @GetMapping
+    public ResponseEntity<ResponseStructure<List<User>>> getAllUsers() {
+        List<User> users = userDAO.getAllUsers();
+        ResponseStructure<List<User>> response = ResponseStructure.success(users);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponseStructure<User>> getUserById(@PathVariable int id) {
+        User user = userDAO.getUserById(id);
+        if (user != null) {
+            ResponseStructure<User> response = ResponseStructure.success(user);
+            return ResponseEntity.ok(response);
+        } else {
+            ResponseStructure<User> response = ResponseStructure.notFound("User not found with ID: " + id);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+    }
+    
+    @PutMapping("/{id}")
+    public ResponseEntity<ResponseStructure<User>> updateUser(@PathVariable int id, @RequestBody User user) {
+        try {
+            User updatedUser = userDAO.updateUser(id, user);
+            if (updatedUser != null) {
+                ResponseStructure<User> response = ResponseStructure.success("User updated successfully", updatedUser);
+                return ResponseEntity.ok(response);
+            } else {
+                ResponseStructure<User> response = ResponseStructure.notFound("User not found with ID: " + id);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            }
+        } catch (Exception e) {
+            ResponseStructure<User> response = ResponseStructure.error(
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                "Error updating user: " + e.getMessage()
+            );
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+    
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ResponseStructure<String>> deleteUser(@PathVariable int id) {
+        String result = userDAO.deleteUser(id);
+        if (result.contains("successfully")) {
+            ResponseStructure<String> response = ResponseStructure.success(result);
+            return ResponseEntity.ok(response);
+        } else {
+            ResponseStructure<String> response = ResponseStructure.notFound(result);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+    }
+
+    @GetMapping("/name/{name}")
+    public ResponseEntity<ResponseStructure<List<User>>> getByName(@PathVariable String name) {
+        List<User> users = userDAO.getByName(name);
+        if (users != null && !users.isEmpty()) {
+            ResponseStructure<List<User>> response = ResponseStructure.success("Users found", users);
+            return ResponseEntity.ok(response);
+        } else {
+            ResponseStructure<List<User>> response = ResponseStructure.success("No users found with name: " + name, List.of());
+            return ResponseEntity.ok(response);
+        }
+    }
+}

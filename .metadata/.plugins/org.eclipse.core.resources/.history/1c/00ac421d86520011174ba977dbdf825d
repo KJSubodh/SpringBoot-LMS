@@ -1,0 +1,34 @@
+package com.pentagon.LibraryManagementSystem.DAO;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.pentagon.LibraryManagementSystem.Entity.Profile;
+import com.pentagon.LibraryManagementSystem.Repository.ProfileRepository;
+
+@Repository
+public class ProfileDAO {
+
+    @Autowired
+    private ProfileRepository profileRepository;
+
+    public Profile saveProfile(Profile p) {
+        return profileRepository.save(p);
+    }
+
+    public List<Profile> getAllProfiles() {
+        return profileRepository.findAll();
+    }
+
+    public Profile getByEmail(String email) {
+        Optional<Profile> profileOpt = profileRepository.findById(email);
+        if (profileOpt.isPresent()) {
+            return profileOpt.get();
+        } else {
+            return null;
+        }
+    }
+}

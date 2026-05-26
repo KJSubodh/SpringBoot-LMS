@@ -1,0 +1,41 @@
+package com.pentagon.LibraryManagementSystem.DTO;
+
+import java.util.List;
+
+public class AuthorDTO {
+    private int id;
+    private String name;
+    private List<Integer> bookIds; // Only IDs, not full book objects
+    
+    public AuthorDTO() {}
+    
+    public AuthorDTO(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+    
+    // Getters and Setters
+    public int getId() {
+        return id;
+    }
+    
+    public void setId(int id) {
+        this.id = id;
+    }
+    
+    public String getName() {
+        return name;
+    }
+    
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    public List<Integer> getBookIds() {
+        return bookIds;
+    }
+    
+    public void setBookIds(List<Integer> bookIds) {
+        this.bookIds = bookIds;
+    }
+}

@@ -1,0 +1,38 @@
+package com.pentagon.LibraryManagementSystem.Controller;
+
+package com.pentagon.LibraryManagementSystem.Controller;
+
+import com.pentagon.LibraryManagementSystem.DAO.UserDAO;
+import com.pentagon.LibraryManagementSystem.Entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/users")
+public class UserController {
+
+    @Autowired
+    private UserDAO userDAO;
+
+    @PostMapping
+    public User createUser(@RequestBody User u) {
+        return userDAO.saveUser(u);
+    }
+
+    @GetMapping
+    public List<User> getAllUsers() {
+        return userDAO.getAllUsers();
+    }
+
+    @GetMapping("/{id}")
+    public User getUserById(@PathVariable int id) {
+        return userDAO.getUserById(id);
+    }
+    
+    @GetMapping("/name/{name}")
+    public List<User> getByName(@PathVariable String name) {
+        return userDAO.getByName(name);
+    }
+}

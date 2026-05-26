@@ -1,0 +1,48 @@
+package com.pentagon.LibraryManagementSystem.Controller;
+
+import com.pentagon.LibraryManagementSystem.DAO.BookDAO;
+import com.pentagon.LibraryManagementSystem.Entity.Book;
+import com.pentagon.LibraryManagementSystem.Entity.Category;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/books")
+public class BookController {
+
+    @Autowired
+    private BookDAO bookDAO;
+
+    @PostMapping
+    public Book addBook(@RequestBody Book b) {
+        return bookDAO.addBook(b);
+    }
+
+    @GetMapping
+    public List<Book> getAllBooks() {
+        return bookDAO.getAllBooks();
+    }
+
+    @GetMapping("/{id}")
+    public Book getBookById(@PathVariable int id) {
+        return bookDAO.getBookById(id); // This will work now
+    }
+
+    @PutMapping("/{id}/borrow/{userId}")
+    public Book borrowBook(@PathVariable int id, @PathVariable int userId) {
+        return bookDAO.borrow(id, userId);
+    }
+    
+    @PutMapping("/{id}")
+    public Book updateBook(@PathVariable int id, @RequestBody Book b) {
+        return bookDAO.updateBook(id, b);
+    }
+    
+    @PutMapping("/{id}/categories")
+    public Book updateCategories(@PathVariable int id, @RequestBody List<Category> categories) {
+        return bookDAO.updateBookCategories(id, categories);
+    }
+}

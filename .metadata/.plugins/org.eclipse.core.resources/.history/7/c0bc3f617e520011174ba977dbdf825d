@@ -1,0 +1,15 @@
+package com.pentagon.LibraryManagementSystem.DAO;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.pentagon.LibraryManagementSystem.Repository.BookRepository;
+
+@Repository
+public class BookDAO {
+	@Autowired
+	private BookRepository book;
+	
+	@Autowired
+	
+}

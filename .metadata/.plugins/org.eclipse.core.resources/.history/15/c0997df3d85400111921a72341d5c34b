@@ -1,0 +1,39 @@
+package com.pentagon.LibraryManagementSystem.Controller;
+
+import com.pentagon.LibraryManagementSystem.Service.AuthorService;
+import com.pentagon.LibraryManagementSystem.Entity.Author;
+import com.pentagon.LibraryManagementSystem.Entity.Book;
+import com.pentagon.LibraryManagementSystem.DTO.ResponseStructure;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/authors")
+public class AuthorController {
+
+    @Autowired
+    private AuthorService authorService;  // ✅ Using Service instead of DAO
+
+    @PostMapping
+    public ResponseEntity<ResponseStructure<Author>> addAuthor(@RequestBody Author a) {
+        return authorService.addAuthor(a);
+    }
+
+    @GetMapping
+    public ResponseEntity<ResponseStructure<List<Author>>> getAllAuthors() {
+        return authorService.getAllAuthors();
+    }
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponseStructure<Author>> getAuthorById(@PathVariable int id) {
+        return authorService.getAuthorById(id);
+    }
+    
+    @GetMapping("/{id}/books")
+    public ResponseEntity<ResponseStructure<List<Book>>> getAuthorBooks(@PathVariable int id) {
+        return authorService.getAuthorBooks(id);
+    }
+}

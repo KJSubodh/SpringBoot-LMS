@@ -1,0 +1,34 @@
+package com.pentagon.LibraryManagementSystem.DAO;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.pentagon.LibraryManagementSystem.Entity.Author;
+import com.pentagon.LibraryManagementSystem.Repository.AuthorRepository;
+
+@Repository
+public class AuthorDAO {
+
+    @Autowired
+    private AuthorRepository authorRepository;
+
+    public Author addAuthor(Author a) {
+        return authorRepository.save(a);
+    }
+
+    public List<Author> getAllAuthors() {
+        return authorRepository.findAll();
+    }
+
+    public Author getAuthorById(int id) {
+        Optional<Author> authorOpt = authorRepository.findById(id);
+        if (authorOpt.isPresent()) {
+            return authorOpt.get();
+        } else {
+            return null;
+        }
+    }
+}

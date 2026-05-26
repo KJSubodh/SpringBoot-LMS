@@ -1,0 +1,5 @@
+package com.pentagon.LibraryManagementSystem.Entity;
+
+public class Category {
+
+}

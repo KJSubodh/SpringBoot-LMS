@@ -1,0 +1,27 @@
+import api from './api';
+
+export const userService = {
+  getAllUsers: async () => {
+    return await api.get('/users');
+  },
+
+  getUserById: async (id) => {
+    return await api.get(`/users/${id}`);
+  },
+
+  createUser: async (userData) => {
+    return await api.post('/users', userData);
+  },
+
+  updateUser: async (id, userData) => {
+    return await api.put(`/users/${id}`, userData);
+  },
+
+  deleteUser: async (id) => {
+    return await api.delete(`/users/${id}`);
+  },
+
+  searchByName: async (name) => {
+    return await api.get(`/users/name/${name}`);
+  },
+};

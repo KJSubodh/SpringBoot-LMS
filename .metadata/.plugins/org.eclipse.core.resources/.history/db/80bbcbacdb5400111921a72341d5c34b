@@ -1,0 +1,11 @@
+package com.pentagon.LibraryManagementSystem.Exception;
+
+public class ResourceNotFoundException extends RuntimeException {
+    
+    // This removes the warning and ensures version compatibility
+    private static final long serialVersionUID = 1L;
+
+    public ResourceNotFoundException(String message) {
+        super(message);
+    }
+}

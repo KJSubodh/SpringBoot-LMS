@@ -1,0 +1,17 @@
+package com.pentagon.LibraryManagementSystem.DAO;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class AuthorDAO {
+
+	@Autowired
+	private AuthorRepository author;
+	
+	public Author addAuthor(Author a) {
+		return author.save(a);
+		
+		
+	}
+}

@@ -1,0 +1,5 @@
+package com.pentagon.LibraryManagementSystem.Exception;
+
+public class ResourceNotFoundException {
+
+}

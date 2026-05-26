@@ -1,0 +1,38 @@
+package com.pentagon.LibraryManagementSystem.DAO;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.pentagon.LibraryManagementSystem.Entity.Profile;
+import com.pentagon.LibraryManagementSystem.Repository.ProfileRepository;
+
+@Repository
+public class ProfileDAO {
+
+    @Autowired
+    private ProfileRepository profileRepository;
+
+    // Supports Requirement: Create a user with profile details
+    // and Bonus: Update user & profile
+    public Profile saveProfile(Profile p) {
+        return profileRepository.save(p);
+    }
+
+    // Fetches all profiles
+    public List<Profile> getAllProfiles() {
+        return profileRepository.findAll();
+    }
+
+    // Fetches single profile by Email (since email is the @Id in your Profile entity)
+    public Profile getByEmail(String email) {
+        Optional<Profile> profileOpt = profileRepository.findById(email);
+        if (profileOpt.isPresent()) {
+            return profileOpt.get();
+        } else {
+            return null;
+        }
+    }
+}

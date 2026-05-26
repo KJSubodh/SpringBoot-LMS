@@ -1,0 +1,69 @@
+package com.pentagon.LibraryManagementSystem.Controller;
+
+import com.pentagon.LibraryManagementSystem.DAO.BookDAO;
+import com.pentagon.LibraryManagementSystem.Entity.Book;
+import com.pentagon.LibraryManagementSystem.Entity.Category;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/books")
+public class BookController {
+
+    @Autowired
+    private BookDAO bookDAO;
+
+    @PostMapping
+    public Book addBook(@RequestBody Book b) {
+        return bookDAO.addBook(b);
+    }
+
+    @GetMapping
+    public List<Book> getAllBooks() {
+        return bookDAO.getAllBooks();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Book> getBookById(@PathVariable int id) {
+        Book book = bookDAO.getBookById(id);
+        if (book != null) {
+            return ResponseEntity.ok(book);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/{id}/borrow/{userId}")
+    public ResponseEntity<Book> borrowBook(@PathVariable int id, @PathVariable int userId) {
+        Book borrowedBook = bookDAO.borrow(id, userId);
+        if (borrowedBook != null) {
+            return ResponseEntity.ok(borrowedBook);
+        } else {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+    
+    // ✅ NEW: Return book endpoint
+    @PutMapping("/{id}/return")
+    public ResponseEntity<Book> returnBook(@PathVariable int id) {
+        Book returnedBook = bookDAO.returnBook(id);
+        if (returnedBook != null) {
+            return ResponseEntity.ok(returnedBook);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    
+    @PutMapping("/{id}")
+    public Book updateBook(@PathVariable int id, @RequestBody Book b) {
+        return bookDAO.updateBook(id, b);
+    }
+    
+    @PutMapping("/{id}/categories")
+    public Book updateCategories(@PathVariable int id, @RequestBody List<Category> categories) {
+        return bookDAO.updateBookCategories(id, categories);
+    }
+}

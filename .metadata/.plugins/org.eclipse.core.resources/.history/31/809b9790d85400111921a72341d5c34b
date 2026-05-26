@@ -1,0 +1,69 @@
+package com.pentagon.LibraryManagementSystem.Controller;
+
+import com.pentagon.LibraryManagementSystem.DAO.AuthorDAO;
+import com.pentagon.LibraryManagementSystem.Entity.Author;
+import com.pentagon.LibraryManagementSystem.Entity.Book;
+import com.pentagon.LibraryManagementSystem.DTO.ResponseStructure;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/authors")
+public class AuthorController {
+
+    @Autowired
+    private AuthorDAO authorDAO;
+
+    @PostMapping
+    public ResponseEntity<ResponseStructure<Author>> addAuthor(@RequestBody Author a) {
+        try {
+            Author savedAuthor = authorDAO.addAuthor(a);
+            ResponseStructure<Author> response = ResponseStructure.created(savedAuthor);
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        } catch (Exception e) {
+            ResponseStructure<Author> response = ResponseStructure.error(
+                HttpStatus.INTERNAL_SERVER_ERROR.value(), 
+                "Error creating author: " + e.getMessage()
+            );
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
+    @GetMapping
+    public ResponseEntity<ResponseStructure<List<Author>>> getAllAuthors() {
+        List<Author> authors = authorDAO.getAllAuthors();
+        ResponseStructure<List<Author>> response = ResponseStructure.success(authors);
+        return ResponseEntity.ok(response);
+    }
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponseStructure<Author>> getAuthorById(@PathVariable int id) {
+        Author author = authorDAO.getAuthorById(id);
+        if (author != null) {
+            ResponseStructure<Author> response = ResponseStructure.success(author);
+            return ResponseEntity.ok(response);
+        } else {
+            ResponseStructure<Author> response = ResponseStructure.notFound("Author not found with ID: " + id);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+    }
+    
+    @GetMapping("/{id}/books")
+    public ResponseEntity<ResponseStructure<List<Book>>> getAuthorBooks(@PathVariable int id) {
+        Author author = authorDAO.getAuthorById(id);
+        if (author != null && author.getBook() != null) {
+            ResponseStructure<List<Book>> response = ResponseStructure.success("Books found for author", author.getBook());
+            return ResponseEntity.ok(response);
+        } else if (author == null) {
+            ResponseStructure<List<Book>> response = ResponseStructure.notFound("Author not found with ID: " + id);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        } else {
+            ResponseStructure<List<Book>> response = ResponseStructure.success("No books found for this author", List.of());
+            return ResponseEntity.ok(response);
+        }
+    }
+}

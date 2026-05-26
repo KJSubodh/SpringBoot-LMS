@@ -1,0 +1,16 @@
+package com.pentagon.LibraryManagementSystem.DAO;
+
+import com.pentagon.LibraryManagementSystem.Entity.Profile;
+
+import java.util.List;
+import java.util.Optional;
+
+public interface ProfileDAO {
+    Profile save(Profile profile);
+    Optional<Profile> findByEmail(String email);
+    List<Profile> findAll();
+    Profile update(Profile profile);
+    void deleteByEmail(String email);
+    boolean existsByEmail(String email);
+    Optional<Profile> findByPhone(long phone);
+}

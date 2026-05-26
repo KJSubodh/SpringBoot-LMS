@@ -1,0 +1,26 @@
+package com.pentagon.LibraryManagementSystem.Controller;
+
+import com.pentagon.LibraryManagementSystem.DAO.CategoryDAO;
+import com.pentagon.LibraryManagementSystem.Entity.Category;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/categories")
+public class CategoryController {
+
+    @Autowired
+    private CategoryDAO categoryDAO;
+
+    @PostMapping
+    public Category addCategory(@RequestBody Category c) {
+        return categoryDAO.addCategory(c);
+    }
+
+    @GetMapping
+    public List<Category> getAllCategories() {
+        return categoryDAO.getAllCategories();
+    }
+}
